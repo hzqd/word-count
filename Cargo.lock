@@ -4,9 +4,9 @@ version = 3
 
 [[package]]
 name = "aoko"
-version = "0.2.7"
+version = "0.2.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ffb319607bc9f1dc6fd16b4bcb8d72e3d5ee9638d4276a32d9fb7471b524e639"
+checksum = "7ada3b867054d1caf9ca6b7b4cff16491ddbad713cc34da8ede9453139f31e90"
 dependencies = [
  "no-std-compat",
 ]

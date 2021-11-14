@@ -1,6 +1,6 @@
 use clap::Parser;
 
-/// World-count-batch
+/// Batch processing word-count, support English & Chinese.
 
 #[derive(Parser)]
 #[clap(version = "0.1.1", author = "hzqd <hzqelf@yeah.net>")]

@@ -1,10 +1,11 @@
-use aoko::no_std::ext::{AnyExt1, Utf8Ext};
+use aoko::no_std::ext::{AnyExt1, BoolExt, Utf8Ext};
 use itertools::Itertools;
 use std::fs;
 
+// 定义标点符号 (punctuation)
+const P: [char; 34] = [' ', '\r', '\n', '，', '。', '！', '？', '“', '”', '‘', '’', '：', '；', '(', ')', '（', '）', '「', '」', '『', '』', '[', ']', '【', '】', '〖', '〗', '{', '}', '《', '》', '—', '〔', '〕'];
+
 pub fn word_count_cn(dict: String, r#in: String, out: String) {
-    // 定义标点符号
-    let p = ['，', '。', '！', '“', '”', '‘', '’', '：', '；', '（', '）', '【', '】', '{', '}', '《', '》', '—']; // punctuation
     // 读文件
     fs::read(r#in).unwrap()
         // 转字符串
@@ -13,12 +14,10 @@ pub fn word_count_cn(dict: String, r#in: String, out: String) {
         .let_owned(|s| if let None = dict.chars().next() {
             // 转字符
             s.chars()
-            // 去标点
-            .filter(|c| p.iter().any(|p| c != p))
-            // 映射，计数`1`
-            .map(|s| (s, 1))
+            // 去标点，计数`1`
+            .filter_map(|c| P.iter().all(|&p| c != p).if_true((c, 1)))
             // 按类分组(小写)
-            .into_grouping_map_by(|t| t.0.to_string()) // Map { "word": [("word", 1), ...], ... }
+            .into_grouping_map_by(|t| t.0.to_string()) // Map { "word": [('char', 1), ...], ... }
             // 聚合:  累计  K V(K, 计数)
             .fold(0, |acc, _, (_, count)| acc + count) // Map { "word": count, ... }
             // 迭代

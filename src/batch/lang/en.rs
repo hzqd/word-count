@@ -1,11 +1,14 @@
-use aoko::no_std::ext::{AnyExt, AnyExt1, Utf8Ext};
+use aoko::no_std::ext::{AnyExt1, Utf8Ext};
 use itertools::Itertools;
 use std::fs;
 
+// prefix punctuation
+const PP: [char; 6] = ['"', '\'', '(', '[', '{', '<'];
+
+// suffix punctuation
+const SP: [char; 12] = [',', '.', '!', '"', '\'', ':', ';', ')', ']', '}', '>', '-'];
+
 pub fn word_count_en(dict: String, r#in: String, out: String) {
-    // 定义标点符号
-    let pp = ['"', '\'', '(', '[', '{', '<'].iter().map(|c| c.as_some()).collect_vec(); // prefix punctuation
-    let sp = [',', '.', '!', '"', '\'', ':', ';', ')', ']', '}', '>', '-'].iter().map(|c| c.as_some()).collect_vec(); // suffix punctuation
     // 读文件
     fs::read(r#in).unwrap()
         // 转小写
@@ -16,14 +19,14 @@ pub fn word_count_en(dict: String, r#in: String, out: String) {
         .let_owned(|s| if let None = dict.chars().next() {
             // 按空格切割
             s.split_whitespace()
-            // 去前缀
-            .map(|s| if pp.contains(&s.chars().next().as_ref()) { &s[1..] } else { s })
-            // 去后缀
-            .map(|s| if sp.contains(&s.chars().rev().next().as_ref()) { &s[..s.len() - 1] } else { s })
-            // 去空串
-            .filter(|s| s.chars().next().is_some())
-            // 映射，计数`1`
-            .map(|s| (s, 1))
+            // 映射 + 过滤
+            .filter_map(|s| s
+                // 去前缀
+                .trim_start_matches(|c| PP.contains(&c))
+                // 去后缀
+                .trim_end_matches(|c| SP.contains(&c))
+                // 去空串，计数`1`
+                .then_if(|s| s.chars().next().is_some(), |s| (s, 1)))
             // 按类分组(小写)
             .into_grouping_map_by(|t| t.0) // Map { "word": [("word", 1), ...], ... }
             // 聚合:  累计  K V(K, 计数)
