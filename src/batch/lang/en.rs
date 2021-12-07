@@ -1,4 +1,4 @@
-use aoko::no_std::ext::{AnyExt1, Utf8Ext};
+use aoko::no_std::functions::ext::{AnyExt1, Utf8Ext};
 use itertools::Itertools;
 use std::fs;
 

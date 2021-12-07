@@ -1,6 +1,6 @@
 [package]
 name = "world-count"
-version = "0.1.1"
+version = "0.1.2"
 authors = ["hzqd <hzqelf@yeah.net>"]
 edition = "2018"
 description = "Word Frequency Statistics"

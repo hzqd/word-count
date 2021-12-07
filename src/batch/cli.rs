@@ -1,3 +1,4 @@
+pub use aoko::no_std::algebraic::sum::TimeUnit;
 use clap::Parser;
 
 /// Batch processing word-count, support English & Chinese.
@@ -19,13 +20,12 @@ pub struct Args {
 
     /// Specify the time unit, support nanos, micros, millis, secs
     #[clap(short, long, default_value = "millis")]
-    pub time: String,
+    pub time: TimeUnit,
 
     /// Set language, support English(en) and Chinese(cn)
     #[clap(subcommand)]
     pub subcmd: Lang,
 }
-
 
 #[derive(Parser)]
 pub enum Lang {
