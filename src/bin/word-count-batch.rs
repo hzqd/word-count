@@ -15,6 +15,6 @@ fn word_count_batch() -> (impl FnOnce(Duration) -> u128, TimeUnit) {
 }
 
 fn main() {
-    measure_time_with_value(|| word_count_batch())
+    measure_time_with_value(word_count_batch)
         .let_owned(|((f, u), e)| println!("Execution time: {} {:?}.", f(e), u));
 }
