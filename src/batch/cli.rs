@@ -4,7 +4,7 @@ use clap::Parser;
 /// Batch processing word-count, support English & Chinese.
 
 #[derive(Parser)]
-#[clap(version = "0.1.1", author = "hzqd <hzqelf@yeah.net>")]
+#[clap(version = "0.1.3", author = "hzqd <hzqelf@yeah.net>")]
 pub struct Args {
     /// Specify the dictionary name, no dictionary by default
     #[clap(short, long, default_value = "")]
