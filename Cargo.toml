@@ -1,6 +1,6 @@
 [package]
 name = "world-count"
-version = "0.1.3"
+version = "0.1.4"
 authors = ["hzqd <hzqelf@yeah.net>"]
 edition = "2018"
 description = "Word Frequency Statistics"
@@ -10,9 +10,13 @@ license = "MIT OR Apache-2.0"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-aoko = "0.2"
+aoko = "0.3.0-alpha.1"
 itertools = "0.10"
 
 [dependencies.clap]
-version = "3.0.0-rc.4"
+version = "4"
 features = ["derive"]
+
+[dependencies.tokio]
+version = "1.28"
+features = ["full"]
